@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,8 +55,12 @@
         alarmSound.play();
 
         // Vibrate
-        navigator.vibrate(1000); // Vibrate for 1 second
+        if ("vibrate" in navigator) {
+            navigator.vibrate([1000, 500, 1000]); // Vibrate pattern: vibrate for 1 second, pause for 0.5 seconds, then vibrate again for 1 second
+        }
     }
 </script>
 </body>
 </html>
+
+
