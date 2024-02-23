@@ -51,14 +51,21 @@
     }
 
     function triggerAlarm() {
-        // Play sound
-        alarmSound.play();
+    // Play sound
+    alarmSound.play();
 
-        // Vibrate
-        if ("vibrate" in navigator) {
-            navigator.vibrate([1000, 500, 1000]); // Vibrate pattern: vibrate for 1 second, pause for 0.5 seconds, then vibrate again for 1 second
-        }
+    // Display notification
+    if ("Notification" in window && Notification.permission === "granted") {
+        new Notification("It's time!");
+    } else if ("Notification" in window && Notification.permission !== "denied") {
+        Notification.requestPermission().then(function (permission) {
+            if (permission === "granted") {
+                new Notification("It's time!");
+            }
+        });
     }
+}
+
 </script>
 </body>
 </html>
