@@ -50,21 +50,30 @@
         }, timeUntilAlarm);
     }
 
-    function triggerAlarm() {
+   function triggerAlarm() {
+    console.log("Alarm triggered");
     // Play sound
     alarmSound.play();
 
     // Display notification
     if ("Notification" in window && Notification.permission === "granted") {
+        console.log("Permission granted, showing notification");
         new Notification("It's time!");
     } else if ("Notification" in window && Notification.permission !== "denied") {
+        console.log("Permission not granted, requesting permission");
         Notification.requestPermission().then(function (permission) {
             if (permission === "granted") {
+                console.log("Permission granted, showing notification");
                 new Notification("It's time!");
+            } else {
+                console.log("Permission denied, notification not shown");
             }
         });
+    } else {
+        console.log("Notifications not supported");
     }
 }
+
 
 </script>
 </body>
