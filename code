@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simple Alarm App</title>
+<style>
+    /* Your CSS styles here */
+</style>
+</head>
+<body>
+<h1>Simple Alarm App</h1>
+
+<form id="alarmForm">
+    <label for="alarmTime">Set Alarm Time:</label>
+    <input type="time" id="alarmTime" required>
+    <button type="submit">Set Alarm</button>
+</form>
+
+<div id="alarmsContainer">
+    <!-- Alarms will be displayed here -->
+</div>
+
+<audio id="alarmSound" src="path/to/alarm-sound.mp3" preload="auto"></audio>
+
+<script>
+    const alarmForm = document.getElementById('alarmForm');
+    const alarmsContainer = document.getElementById('alarmsContainer');
+    const alarmSound = document.getElementById('alarmSound');
+
+    alarmForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const alarmTime = document.getElementById('alarmTime').value;
+        setAlarm(alarmTime);
+    });
+
+    function setAlarm(time) {
+        const alarm = document.createElement('div');
+        alarm.textContent = `Alarm set for ${time}`;
+        alarmsContainer.appendChild(alarm);
+
+        const now = new Date();
+        const alarmTime = new Date(now.toDateString() + ' ' + time);
+
+        const timeUntilAlarm = alarmTime - now;
+        setTimeout(() => {
+            triggerAlarm();
+            alarm.remove();
+        }, timeUntilAlarm);
+    }
+
+    function triggerAlarm() {
+        // Play sound
+        alarmSound.play();
+
+        // Vibrate
+        navigator.vibrate(1000); // Vibrate for 1 second
+    }
+</script>
+</body>
+</html>
